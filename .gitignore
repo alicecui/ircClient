@@ -1,0 +1,6 @@
+﻿Win32/
+IrcClient.sdf
+IrcClient/Debug/
+IrcClient/GeneratedFiles/
+IrcClient/IrcClient.vcxproj.user
+IrcClient/log.txt

@@ -30,7 +30,8 @@ public:
     void sendNoticeToPerson(const QByteArray &nick, const QByteArray &self, const QByteArray &data);
     void sendPrivMsgToPerson(const QByteArray &nick, const QByteArray &self, const QByteArray &data);
     void sendT();
-    void sendMsg(const QString &data, const QString &channel);
+    void sendMsg(const QString &data);
+    void quit();
 
 signals:
     void privMsgToMe(const QString &senderNick, const QString &content);

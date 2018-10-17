@@ -39,6 +39,7 @@ void IrcClient::initIrc()
 void IrcClient::deleteIrc()
 {
     if (m_ircProtocol) {
+        m_ircProtocol->quit();
         m_ircProtocol->close();
         m_ircProtocol->deleteLater();
         m_ircProtocol = NULL;
@@ -54,7 +55,7 @@ void IrcClient::connectToHost()
     ircServer.passwd = "cuijie";
     ircServerList.append(ircServer);
 
-    m_ircProtocol->connectToHost(ircServerList, "irc-client", QStringList(m_channel));//channels: ("#2L11113")//name: "s_2_11113_2383553_2"//
+    m_ircProtocol->connectToHost(ircServerList, QSysInfo::machineHostName(), QStringList(m_channel));//channels: ("#2L11113")//name: "s_2_11113_2383553_2"//
 }
 
 void IrcClient::disconnect()
@@ -71,7 +72,7 @@ void IrcClient::on_sendBtn_pressed()
     }
 
     if (m_ircProtocol) {
-        m_ircProtocol->sendMsg(ui.sendEdit->text(), m_channel);
+        m_ircProtocol->sendMsg(ui.sendEdit->text());
         ui.listWidget->addItem(ui.sendEdit->text());
         ui.sendEdit->clear();
     }

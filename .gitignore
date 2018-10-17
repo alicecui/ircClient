@@ -1,6 +1,10 @@
-﻿Win32/
-IrcClient.sdf
-IrcClient/Debug/
+﻿IrcClient/Debug/
+IrcClient/Release/
+Win32/Debug/
+Win32/Release/
 IrcClient/GeneratedFiles/
 IrcClient/IrcClient.vcxproj.user
 IrcClient/log.txt
+IrcClient.opensdf
+IrcClient.v12.suo
+IrcClient.sdf

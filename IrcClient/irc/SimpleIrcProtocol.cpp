@@ -208,6 +208,8 @@ void SimpleIrcProtocol::onSocketConnected()
     //QString userStr = QString("%1 0 * :xes").arg(m_userName);
     //QByteArray user = IrcMessage::encode(IMT_USER, userStr.toLatin1());
     //writeLine(user);
+
+    writeLine(QString("nick|%1").arg(m_userName).toUtf8());
 }
 
 void SimpleIrcProtocol::onSocketError(QAbstractSocket::SocketError socketError)
@@ -505,8 +507,12 @@ void SimpleIrcProtocol::sendT()
     qDebug() << m_userName << " Send T to " << m_oldUserName;
 }
 
-void SimpleIrcProtocol::sendMsg(const QString &data, const QString &channel)
+void SimpleIrcProtocol::sendMsg(const QString &data)
 {
-    QString pkt = QString("%1 %2").arg(channel).arg(data);
-    writeLine(pkt.toUtf8());
+    writeLine(QString("say|%1|%2").arg(m_userName).arg(data).toUtf8());
+}
+
+void SimpleIrcProtocol::quit()
+{
+    writeLine(QString("quit|%1").arg(m_userName).toUtf8());
 }

@@ -46,6 +46,7 @@ signals:
     void connectTimeout(bool flag, const QString &text, const QString& errStr);
     void dirtyWordRecognised(const QString& nick, const QString& word);
     void reGetChatHost();
+    void privMsg(const QString &content);
 
 private slots:
     void onSocketReadyRead();

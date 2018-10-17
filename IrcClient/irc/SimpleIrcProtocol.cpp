@@ -117,6 +117,11 @@ void SimpleIrcProtocol::sendPrivMsgToPerson(const QByteArray &nick, const QByteA
 
 void SimpleIrcProtocol::onSocketReadyRead()
 {
+    QByteArray line = m_socket->readAll();
+    QString ircMsg = line;
+    qDebug() << "Original irc msg:" << ircMsg;
+    emit privMsg(ircMsg);
+    return;
     while (m_socket && m_socket->canReadLine()) {
         QString line = m_socket->readLine().trimmed();
         QString ircMsg = line;
@@ -216,6 +221,8 @@ void SimpleIrcProtocol::onSocketError(QAbstractSocket::SocketError socketError)
 {    
     m_errString = QString("Chat socket error: ") + socketError;
     qDebug() << __FUNCTION__ << m_errString;
+    emit reconnect();
+    return;
     if (m_heartBeatTimer.isActive()) {
         m_heartBeatTimer.stop();
     }

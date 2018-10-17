@@ -31,6 +31,7 @@ private slots:
     void onPrivMsgToChannel(const QString &senderNick, const QString &content, const QString &channel);
     void onNoticeMsgToMe(const QString &senderNick, const QString &content);
     void onNoticeMsgToChannel(const QString &senderNick, const QString &content, const QString &channel);
+    void onPrivMsg(const QString &content);
 
 private:
     void initIrc();

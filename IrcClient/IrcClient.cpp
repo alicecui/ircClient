@@ -34,6 +34,7 @@ void IrcClient::initIrc()
     connect(m_ircProtocol, SIGNAL(reconnect()), this, SLOT(onReconnect()));
     connect(m_ircProtocol, SIGNAL(reGetChatHost()), SLOT(onReGetChatHost()));
     connect(m_ircProtocol, SIGNAL(dirtyWordRecognised(QString, QString)), this, SLOT(onDirtyWordRecognised(QString, QString)));
+    connect(m_ircProtocol, SIGNAL(privMsg(QString)), this, SLOT(onPrivMsg(QString)));
 }
 
 void IrcClient::deleteIrc()
@@ -73,7 +74,7 @@ void IrcClient::on_sendBtn_pressed()
 
     if (m_ircProtocol) {
         m_ircProtocol->sendMsg(ui.sendEdit->text());
-        ui.listWidget->addItem(ui.sendEdit->text());
+        ui.listWidget->addItem("["+QSysInfo::machineHostName() + "]: " + ui.sendEdit->text());
         ui.sendEdit->clear();
     }
 }
@@ -111,6 +112,7 @@ void IrcClient::onReGetChatHost()
 void IrcClient::onReconnect()
 {
     qDebug() << Q_FUNC_INFO;
+    close();
 }
 
 void IrcClient::onNamesList(const QStringList &nicks)
@@ -130,25 +132,30 @@ void IrcClient::onQuit(const QString &name)
 
 void IrcClient::onTopic(const QString  &content, const QString &channel)
 {
-    ui.listWidget->addItem(channel + content);
+    ui.listWidget->addItem(channel + ":" + content);
 }
 
 void IrcClient::onPrivMsgToMe(const QString &senderNick, const QString &content)
 {
-    ui.listWidget->addItem(senderNick + content);
+    ui.listWidget->addItem(senderNick + ":" + content);
 }
 
 void IrcClient::onPrivMsgToChannel(const QString &senderNick, const QString &content, const QString &channel)
 {
-    ui.listWidget->addItem(channel + senderNick + content);
+    ui.listWidget->addItem(senderNick + ":" + content);
 }
 
 void IrcClient::onNoticeMsgToMe(const QString &senderNick, const QString &content)
 {
-    ui.listWidget->addItem(senderNick + content);
+    ui.listWidget->addItem(senderNick + ":" + content);
 }
 
 void IrcClient::onNoticeMsgToChannel(const QString &senderNick, const QString &content, const QString &channel)
 {
-    ui.listWidget->addItem(channel + senderNick + content);
+    ui.listWidget->addItem(senderNick + ":" + content);
+}
+
+void IrcClient::onPrivMsg(const QString &content)
+{
+    ui.listWidget->addItem(content);
 }
